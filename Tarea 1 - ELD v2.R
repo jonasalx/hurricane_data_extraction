@@ -31,7 +31,10 @@ length(hurr_tracks)
 
 ## 
 
+library(stringr)
 library(purrr)
+str_split(hurr_tracks[1], pattern = ",")
+
 hurr_tracks <- purrr::map(hurr_tracks, str_split,
                           pattern = ",", simplify = TRUE)
 
@@ -40,7 +43,9 @@ hurr_lengths <- map_int(hurr_tracks, length)
 hurr_meta <- hurr_tracks[hurr_lengths == 4]
 hurr_obs <- hurr_tracks[hurr_lengths == 21]
 
-library(dplyr); library(tibble)
+library(dplyr); 
+library(tibble)
+
 hurr_meta <- hurr_meta %>% 
   purrr::map(as_tibble) %>% 
   bind_rows()
@@ -122,3 +127,5 @@ hurr_obs2 <- hurr_obs2 %>%
     est_torm == 'T' ~ 'Provides additional detail on the track (position) of the cyclone',
     est_torm == 'W' ~ 'Maximum sustained wind speed',
     TRUE ~ 'No determinado'))
+
+head(hurr_obs2)
